@@ -15,7 +15,7 @@ const BoardDetail = () => {
   const { boardNo } = useParams();
   const location = useLocation();
   const [image, setImage] = useState(null);
-  z;
+
   const ReplyRegist_URL = `${API_BASE_URL}${BOARD}/reply`;
   const API_URL = `${API_BASE_URL}${BOARD}/${boardNo}`;
   const MODIFY_URL = `${API_BASE_URL}${BOARD}/${boardNo}`;
