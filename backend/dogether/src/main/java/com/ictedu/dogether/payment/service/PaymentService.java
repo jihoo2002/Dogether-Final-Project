@@ -95,11 +95,14 @@ public class PaymentService {
                 .orderName(response.getBody().getOrderName())
                 .amount(response.getBody().getTotalAmount())
                 .method(response.getBody().getMethod())
-                .status(response.getBody().getStatus())
                 .requestedAt(response.getBody().getRequestedAt())
                 .approvedAt(response.getBody().getApprovedAt())
+                .status(response.getBody().getStatus())
                 .user(user) // User 정보 설정
                 .build();
+        log.info("\n\n\n\n 토스에게 전달 받은 값 status {}", response.getBody().getStatus());
+
+        log.info("\n\n\n\n 페이먼츠에 넣은 전달 받은 값 status === {}  타입 === {} ", payment.getStatus());
 
         CardInfo cardInfo = null;
         if(response.getBody().getCard() != null) {

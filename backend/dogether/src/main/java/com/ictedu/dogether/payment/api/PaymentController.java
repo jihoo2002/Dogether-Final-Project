@@ -67,10 +67,11 @@ public class PaymentController {
     }
 
     // Payment 결제 내역 삭제, 곰곰히 생각해보니까 결제를 취소 한다고 결제 내역이 삭제 되면 안되잖아.
-    @DeleteMapping()
+    @DeleteMapping("/{orderId}")
     public ResponseEntity<?> confirmPayment(@PathVariable("orderId") String orderId,
                                             @AuthenticationPrincipal TokenUserInfo userInfo) {
         try {
+            log.info(userInfo.getUserId());
             paymentService.deletePayment(orderId, userInfo);
 
             // 성공적인 경우

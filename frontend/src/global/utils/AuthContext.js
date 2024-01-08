@@ -13,7 +13,7 @@ const AuthContext = React.createContext({
 // 위에서 생성한 Context를 제공할 수 있는 provider
 // 이 컴포넌트를 통해 자식 컴포넌트에게 인증 상태와 관련된 함수들을 전달할 수 있음.
 export const AuthContextProvider = (props) => {
-  // console.log('AuthContextProvider called');
+  console.log('AuthContextProvider called');
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState(

@@ -3,6 +3,7 @@ import './BoardDetail.scss';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { API_BASE_URL, BOARD } from '../../global/config/host-config';
 import Swal from 'sweetalert2';
+import { WarningAlert2 } from '../../global/Alerts';
 
 let today = new Date();
 const BoardDetail = () => {
@@ -65,6 +66,15 @@ const BoardDetail = () => {
 
   // 댓글 등록 핸들러
   const handleCommentSubmit = () => {
+    if (!currentUserId) {
+      WarningAlert2(
+        '로그인 이후에 이용해 주세요',
+        '',
+        '로그인되어 있지 않습니다.'
+      );
+
+      return;
+    }
     if (newComment === '') {
       Swal.fire('댓글을 입력해주세요', '', 'error');
       return;
@@ -177,21 +187,28 @@ const BoardDetail = () => {
   };
   //게시물 삭제 요청
   const deleteBoard = async () => {
-    if (window.confirm('게시글을 삭제하시겠습니까?')) {
-      const res = await fetch(MODIFY_URL, {
-        method: 'DELETE',
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('ACCESS_TOKEN'),
-        },
-      });
+    Swal.fire({
+      title: '게시글을 삭제하시겠습니까?',
+      showDenyButton: true,
+      confirmButtonText: '예',
+      denyButtonText: '아니오',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await fetch(MODIFY_URL, {
+          method: 'DELETE',
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('ACCESS_TOKEN'),
+          },
+        });
 
-      if (res.status === 200) {
-        Swal.fire('게시물이 삭제되었습니다.', '', 'success');
-        redirection('/board');
-      } else {
-        Swal.fire('삭제 권한이 없습니다.', '', 'warning');
+        if (res.status === 200) {
+          Swal.fire('게시물이 삭제되었습니다.', '', 'success');
+          redirection('/board');
+        } else {
+          Swal.fire('삭제 권한이 없습니다.', '', 'warning');
+        }
       }
-    }
+    });
   };
 
   //게시물 수정 요청 베이스 끌고오기

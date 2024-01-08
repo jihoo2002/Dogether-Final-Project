@@ -95,7 +95,10 @@ function PaymentSuccess() {
   const ToOrderHistory = () => {
     redirection(`${USER}/orderhistory`);
   };
-
+  let userName = localStorage.getItem('USER_NAME');
+  if (userName === null) {
+    userName = '사용자';
+  }
   // 로딩 상태와 컴포넌트 렌더링 부분을 분리합니다.
   let content;
   if (loading) {
@@ -109,7 +112,7 @@ function PaymentSuccess() {
             src='https://static.toss.im/3d-emojis/u1F389_apng.png'
             alt='축하 이미지 '
           />
-          {localStorage.getItem('LOGIN_USERNAME')}님 결제가 완료 되었습니다.
+          {userName}님 결제가 완료 되었습니다.
           <img
             width='35px'
             src='https://static.toss.im/3d-emojis/u1F389_apng.png'

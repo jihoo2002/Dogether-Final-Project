@@ -27,7 +27,8 @@ const Quiz = () => {
   const [nyaHoProgress, setNyaHoProgress] = useState(0);
 
   const [openModal, setOpenModal] = useState(false);
-
+  
+  localStorage.setItem('SCORE', score);
   // 퀴즈 점수 저장
   const scoreSave = async () => {
     try {

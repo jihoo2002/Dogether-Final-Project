@@ -1,11 +1,10 @@
 package com.ictedu.dogether.ownproduct.entity;
 
+import com.ictedu.dogether.payment.entity.PaymentDetail;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @ToString
@@ -31,5 +30,9 @@ public class Product {
     private String price;
 
     private String img;
+
+    @Setter
+    @OneToMany(mappedBy = "products", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<PaymentDetail> paymentDetails;
 
 }

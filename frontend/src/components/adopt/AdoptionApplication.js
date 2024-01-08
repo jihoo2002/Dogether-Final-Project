@@ -6,11 +6,14 @@ import { error } from 'jquery';
 import { json, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { API_BASE_URL, CONTRACT } from '../../global/config/host-config';
 import Swal from 'sweetalert2';
+import { WarningAlert } from '../../global/Alerts';
 
 const AdoptionApplication = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { desertionNo } = useParams();
+
+  const score = localStorage.getItem('SCORE');
 
   const [modalVisible, setModalVisible] = useState(true);
   const [registData, setRegistData] = useState({
@@ -85,7 +88,24 @@ const AdoptionApplication = () => {
   };
   console.log('새로운 폼데이터 정보', registData.job);
   console.log('폼데이터 정보', formData);
+
   const handleSummit = async (e) => {
+    // eslint-disable-next-line no-mixed-operators
+    if (
+      score === undefined ||
+      score === null ||
+      parseInt(score) <= 6 ||
+      parseInt(score) === 0
+    ) {
+      e.preventDefault();
+      WarningAlert(
+        '반려퀴즈 70점 이상 신청 가능합니다.',
+        '',
+        '반려 퀴즈 미수료 상태입니다.'
+      );
+      return;
+    }
+
     if (registData.job.trim() === '' && registData.reason.trim() === '') {
       Swal.fire('입력값이 비었습니다.', '', 'error');
       return;
